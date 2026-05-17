@@ -1,135 +1,151 @@
-# Домашнее задание к занятию "`Система мониторинга Zabbix`" - `Чернобровкин Иван`
+# Домашнее задание к занятию "Система мониторинга Zabbix"
 
-### Инструкция по выполнению домашнего задания
-
-   1. Сделайте `fork` данного репозитория к себе в Github и переименуйте его по названию или номеру занятия, например, https://github.com/имя-вашего-репозитория/git-hw или  https://github.com/имя-вашего-репозитория/7-1-ansible-hw).
-   2. Выполните клонирование данного репозитория к себе на ПК с помощью команды `git clone`.
-   3. Выполните домашнее задание и заполните у себя локально этот файл README.md:
-      - впишите вверху название занятия и вашу фамилию и имя
-      - в каждом задании добавьте решение в требуемом виде (текст/код/скриншоты/ссылка)
-      - для корректного добавления скриншотов воспользуйтесь [инструкцией "Как вставить скриншот в шаблон с решением](https://github.com/netology-code/sys-pattern-homework/blob/main/screen-instruction.md)
-      - при оформлении используйте возможности языка разметки md (коротко об этом можно посмотреть в [инструкции  по MarkDown](https://github.com/netology-code/sys-pattern-homework/blob/main/md-instruction.md))
-   4. После завершения работы над домашним заданием сделайте коммит (`git commit -m "comment"`) и отправьте его на Github (`git push origin`);
-   5. Для проверки домашнего задания преподавателем в личном кабинете прикрепите и отправьте ссылку на решение в виде md-файла в вашем Github.
-   6. Любые вопросы по выполнению заданий спрашивайте в чате учебной группы и/или в разделе “Вопросы по заданию” в личном кабинете.
-   
-Желаем успехов в выполнении домашнего задания!
-   
-### Дополнительные материалы, которые могут быть полезны для выполнения задания
-
-1. [Руководство по оформлению Markdown файлов](https://gist.github.com/Jekins/2bf2d0638163f1294637#Code)
+## Выполнил
+Чернобровкин Иван
 
 ---
 
-### Задание 1
-# Zabbix installation (PostgreSQL)
+# Задание 1
 
-## Описание
-Установка и настройка Zabbix server с PostgreSQL и веб-интерфейсом.
+## Установка Zabbix Server с PostgreSQL
+
+Был установлен и настроен Zabbix Server с PostgreSQL и веб-интерфейсом.
 
 ---
 
-## Использованные команды
+## Установка необходимых пакетов
 
-### Установка пакетов
+```bash
 sudo apt install -y zabbix-server-pgsql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent php-pgsql
+```
 
 ---
 
-### Запуск PostgreSQL
+## Запуск PostgreSQL
+
+```bash
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
+```
 
 ---
 
-### Создание базы данных
+## Создание базы данных
+
+```bash
 sudo -u postgres createdb zabbix -O zabbix
+```
 
 ---
 
-### Импорт схемы Zabbix
+## Импорт схемы базы данных
+
+```bash
 zcat /usr/share/zabbix-sql-scripts/postgresql/server.sql.gz | psql -U zabbix -d zabbix
+```
 
 ---
 
-### Перезапуск сервисов
+## Перезапуск сервисов
+
+```bash
 sudo systemctl restart zabbix-server apache2
+```
 
 ---
 
-### Проверка статуса
+## Проверка статуса
+
+```bash
 systemctl status zabbix-server
+systemctl status apache2
+systemctl status postgresql
+```
 
 ---
 
-### Подключение к базе
+## Подключение к базе
+
+```bash
 psql -h localhost -U zabbix -d zabbix
+```
 
+---
 
-### Задание 2
+# Задание 2
 
-Установлен Zabbix agent на хост Practica и настроен для подключения к серверу.
+## Установка и настройка Zabbix Agent
 
-### Шаги выполнения:
+На хосте Practica установлен Zabbix Agent и настроено подключение к серверу Zabbix.
 
+---
+
+## Установка агента
+
+```bash
 sudo apt install zabbix-agent -y
+```
 
+---
+
+## Настройка конфигурации
+
+Отредактирован файл:
+
+```bash
 sudo nano /etc/zabbix/zabbix_agentd.conf
-# указаны Server и ServerActive (IP Zabbix server)
+```
 
+Указаны параметры:
+- Server = IP Zabbix Server
+- ServerActive = IP Zabbix Server
+
+---
+
+## Перезапуск агента
+
+```bash
 sudo systemctl restart zabbix-agent
 sudo systemctl enable zabbix-agent
-
-sudo systemctl status zabbix-agent
-
-sudo ss -tlnp | grep 10050
+```
 
 ---
 
-## Результат:
-Zabbix agent работает и передаёт данные на сервер.
+## Проверка статуса
 
-
-### Задание 3
-
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
-
-```
-Поле для вставки кода...
-....
-....
-....
-....
+```bash
+sudo systemctl status zabbix-agent
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
+---
 
-### Задание 4
+## Проверка порта
 
-`Приведите ответ в свободной форме........`
-
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
-
-```
-Поле для вставки кода...
-....
-....
-....
-....
+```bash
+sudo ss -tlnp | grep 10050
 ```
 
-`При необходимости прикрепитe сюда скриншоты
-![Название скриншота](ссылка на скриншот)`
+---
+
+# Скриншоты
+
+## Задание 1
+
+### Установка Zabbix Server
+![Install](https://github.com/Riffshadow/sys-pattern-homework/blob/main/1.1.png)
+
+### База данных
+![DB](https://github.com/Riffshadow/sys-pattern-homework/blob/main/1.2.png)
+
+---
+
+## Задание 2
+
+### Agent status
+![Agent](https://github.com/Riffshadow/sys-pattern-homework/blob/main/2.1.png)
+
+### Latest data
+![Data](https://github.com/Riffshadow/sys-pattern-homework/blob/main/2.2.png)
+
+### Hosts
+![Hosts](https://github.com/Riffshadow/sys-pattern-homework/blob/main/2.3.png)
