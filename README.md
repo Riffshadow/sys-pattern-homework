@@ -149,3 +149,7 @@ sudo ss -tlnp | grep 10050
 
 ### Hosts
 ![Hosts](https://github.com/Riffshadow/sys-pattern-homework/blob/main/2.3.png)
+
+### Zabbix Agent log (working with server)
+
+![Agent log](https://raw.githubusercontent.com/Riffshadow/sys-pattern-homework/main/2.4.png)
