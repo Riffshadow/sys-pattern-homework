@@ -141,10 +141,10 @@ sudo ss -tlnp | grep 10050
 
 ## Задание 2
 
-### Agent status
+### Latest data 
 ![Agent](https://github.com/Riffshadow/sys-pattern-homework/blob/main/2.1.png)
 
-### Latest data
+### Agent status
 ![Data](https://github.com/Riffshadow/sys-pattern-homework/blob/main/2.2.png)
 
 ### Hosts
